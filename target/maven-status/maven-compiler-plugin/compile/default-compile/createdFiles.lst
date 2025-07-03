@@ -1,0 +1,10 @@
+com\anagha\petclinic\utils\BrowserType.class
+com\anagha\petclinic\utils\DriverFactory.class
+com\anagha\petclinic\pages\AddOwnersPage.class
+com\anagha\petclinic\pages\AddPetPage.class
+com\anagha\petclinic\utils\DriverFactory$1.class
+com\anagha\petclinic\pages\VeterinariansListPage.class
+com\anagha\petclinic\utils\ConfigReader.class
+com\anagha\petclinic\pages\HomePage.class
+com\anagha\petclinic\pages\AddVisitPage.class
+com\anagha\petclinic\pages\FindOwnersPage.class
