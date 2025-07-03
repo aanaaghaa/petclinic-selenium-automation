@@ -1,4 +1,4 @@
-@skip
+
 Feature: PetClinic Find Owner
 
 @positive

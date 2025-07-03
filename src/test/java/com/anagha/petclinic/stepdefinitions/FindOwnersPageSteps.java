@@ -46,9 +46,11 @@ public class FindOwnersPageSteps {
 		
 		String ownerInfo = findOwnerPage.getOwnerInfoHeader();
 		logger.info("Owner Information header text found: {}", ownerInfo);
-		Assert.assertTrue(ownerInfo.contains("Owner"));
+		Assert.assertTrue("Owner info header not displayed properly", ownerInfo.contains("Owner"));
 		
-		Assert.assertTrue(findOwnerPage.isOwnerNamePresent("Anagha"));
+		String expectedName = "Anagha";
+		Assert.assertTrue("Owner name '" + expectedName + "' not found", findOwnerPage.isOwnerNamePresent(expectedName));
+
 
 	}
 	
@@ -64,7 +66,7 @@ public class FindOwnersPageSteps {
 	@Then("the user will get field error")
 	public void the_user_will_get_field_error()
 	{
-		String lastNameValError=driver.findElement(By.xpath("//span[@class='help-inline']//p")).getText();
+		String lastNameValError=findOwnerPage.getFieldError();
 		logger.info("Validation error displayed: {}", lastNameValError);
 		Assert.assertTrue(lastNameValError.contains("has not been found"));
 	}
@@ -74,12 +76,12 @@ public class FindOwnersPageSteps {
 	--------------------------------------------------------------------------------------------------------------*/
 	@When("the user finds the same Owner name with different cases of {string}")
 	public void the_user_finds_the_same_Owner_name_with_different_cases_of(String lastName) throws InterruptedException {
-		Thread.sleep(100);
+		basePage.waitForElement(By.id("lastName"));
 	    if (lastName == null || lastName.trim().isEmpty()) {
 	        throw new IllegalArgumentException("Last name was not passed from feature file!");
 	    }
 
-	    logger.info("Entered case-variant last name", lastName);
+	    logger.info("Entered case-variant last name: {}", lastName);
 	    findOwnerPage.ownerDetails(lastName);
 	}
 
@@ -88,6 +90,6 @@ public class FindOwnersPageSteps {
 	{
 		String ownerInfo = findOwnerPage.getOwnerInfoHeader();
 		logger.info("Owner Information found for case-variant search: {}", ownerInfo);
-		Assert.assertTrue(ownerInfo.contains("Owner"));
+		Assert.assertTrue("Owner info header not displayed properly", ownerInfo.contains("Owner"));
 	}
 }

@@ -31,6 +31,11 @@ public class FindOwnersPage extends BasePage{
 	    List<WebElement> data = driver.findElements(By.xpath("//th[text()='Name']/ancestor::thead/following-sibling::tbody/tr/td"));
 	    return data.stream().anyMatch(el -> el.getText().contains(name));
 	}
+	
+	public String getFieldError()
+	{
+		return driver.findElement(By.xpath("//span[@class='help-inline']//p")).getText();
+	}
 
 
 }
