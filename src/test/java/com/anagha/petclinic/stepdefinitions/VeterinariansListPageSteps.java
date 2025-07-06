@@ -26,7 +26,7 @@ public class VeterinariansListPageSteps {
 	@Given("the user is on the Home page")
 	public void the_user_is_on_the_Home_page()
 	{
-		driver=DriverFactory.initDriver();
+		driver=DriverFactory.getDriver();
 		driver.get(ConfigReader.get("url"));
 		if (ConfigReader.get("url") == null) {
 		    logger.error("Base URL is not configured in config.properties.");

@@ -1,20 +1,27 @@
 @skip
 @positive
 Feature: Adding a visit to pet and check if its reflecting in the history
-Scenario: Verify if pet can be added to visit and it is reflecting in the history
-Given the user is on the owners page
-When the user clicks on Add visit link
+Scenario Outline: Add visit to pet for multiple owners
+Given the user is on the owners page for "<ownerId>"
+When the user clicks on Add visit link for the pet "<petName>"
 Then the user should be redirected to the visiting page
-And the user should be able to add all the details and save it
+And the user provides visit date "<date>" and description "<description>"
 And user should get a success message
 And the user should be able to view the visit in the owners page
 And the user should be able to view the visit in the visit page
+And the visit details should be added to the database for owner "<ownerId>" and pet "<petName>"
+
+Examples:
+    | ownerId | petName			| date        | description     |
+    | 3	      |	Ginger			| TODAY				| Grooming Visit  |
+    | 1 	    |	Leo					| TODAY			  |  Health Checkup	|
+    | 5	      |	Bella				| TODAY				|  Vaccination		|
 
 @negative
 
 Scenario: Verify if the user can submit empty description visit
 Given the user is on the owners page
-When the user clicks on Add visit link 
+When the user clicks on Add visit link
 And the user provides the valid date and empty description
 Then the user will get a field validation error
 
@@ -25,3 +32,5 @@ Given the user is on the owners page
 When the user clicks on Add visit link 
 And the user provides a valid date and five hundred character long description
 Then the user should be directed to error page
+
+  

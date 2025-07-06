@@ -26,7 +26,7 @@ public class FindOwnersPageSteps {
 	@Given("the user is on Find Owners page")
 	public void the_user_is_on_Find_Owners_page()
 	{
-		driver=DriverFactory.initDriver();
+		driver=DriverFactory.getDriver();
 		driver.get(ConfigReader.get("url")+"/owners/find");
 		findOwnerPage=new FindOwnersPage(driver);
 		String currUrl=driver.getCurrentUrl();

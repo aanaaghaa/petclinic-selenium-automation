@@ -25,7 +25,9 @@ public class FindOwnersPage extends BasePage{
 	}
 
 	public String getOwnerInfoHeader() {
-		return driver.findElement(By.xpath("//h2[contains(text(),'Owner')]")).getText();
+		By headerLocator = By.xpath("//h2[contains(text(),'Owner')]");
+		waitForElement(headerLocator); 
+		return driver.findElement(headerLocator).getText();
 	}
 	public boolean isOwnerNamePresent(String name) {
 	    List<WebElement> data = driver.findElements(By.xpath("//th[text()='Name']/ancestor::thead/following-sibling::tbody/tr/td"));

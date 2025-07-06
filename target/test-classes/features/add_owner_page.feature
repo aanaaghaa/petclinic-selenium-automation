@@ -4,13 +4,13 @@ Feature: PetClinic Add Owner
 @positive
 
 Scenario: Add a new owner with valid details
-    Given the user is on the Add Owner page
-    When the user enters all valid owner details
-    Then the new owner should be added successfully
-    And the user should be able to edit the owner
-    And the added information should be visible on the Owner Information page
-    And a confirmation or success message should be displayed
-    And the user should be able to add a new pet for the owner
+Given the user is on the Add Owner page
+When the user enters all valid owner details from Excel and confirm success
+Then all the owners added through UI should be present in the database
+And the added information should be visible on the Owner Information page
+And the user should be able to add a new pet for the owner
+And the user should be able to edit the owner
+  
     
 @negative
 

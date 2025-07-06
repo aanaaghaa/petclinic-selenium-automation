@@ -1,5 +1,6 @@
 package com.anagha.petclinic.stepdefinitions;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Assert;
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import com.anagha.petclinic.base.BasePage;
 import com.anagha.petclinic.pages.AddVisitPage;
 import com.anagha.petclinic.utils.ConfigReader;
+import com.anagha.petclinic.utils.DBUtils;
 import com.anagha.petclinic.utils.DriverFactory;
 
 import io.cucumber.java.en.Given;
@@ -24,6 +26,7 @@ public class AddVisitSteps {
 	AddVisitPage addVisitPage;
 	BasePage basePage;
 	String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	private String savedDescription;
 	public static final String REGULAR_VISIT = "Reg check up";
 	public static final String GENERIC_ERROR = "Something happened";
 
@@ -32,22 +35,26 @@ public class AddVisitSteps {
 	POSITIVE TEST CASE
 	--------------------------------------------------------------------------------------------------------------*/
 	
-	@Given("the user is on the owners page")
-	public void the_user_is_on_the_owners_page()
+	@Given("the user is on the owners page for {string}")
+	public void the_user_is_on_the_owners_page_for(String ownerId)
 	{
-		driver = DriverFactory.initDriver();
-		driver.get(ConfigReader.get("url")+"/owners/9");
+		driver=DriverFactory.getDriver();
+		driver.get(ConfigReader.get("url")+"/owners/" + ownerId);
 		String currUrl=driver.getCurrentUrl();
 		logger.info("Navigated to Owner page. Current URL: {}", currUrl);
 		Assert.assertTrue(currUrl.contains("owners"));
 		basePage=new BasePage(driver);
 		addVisitPage=new AddVisitPage(driver);
 	}
-	@When("the user clicks on Add visit link")
-	public void the_user_clicks_on_Add_visit_link() throws InterruptedException
+	@When("the user clicks on Add visit link for the pet {string}")
+	public void the_user_clicks_on_Add_visit_link_for_the_pet(String petName) throws InterruptedException
 	{
-		logger.info("Clicking on Add Visit link.");
-		addVisitPage.addVisitButtonClick();
+		
+		 logger.info("Looking for Add Visit link for pet: {}", petName);
+
+		 addVisitPage.clickAddVisitLinkForPet(petName);
+		 
+		    logger.info("Clicked on Add Visit link for pet: {}", petName);
 	}
 	@Then("the user should be redirected to the visiting page")
 	public void the_user_should_be_redirected_to_the_visiting_page()
@@ -56,11 +63,15 @@ public class AddVisitSteps {
 		logger.info("Redirected to Add Visit page. Current URL: {}", currUrl);
 		Assert.assertTrue(currUrl.contains("visits/new"));
 	}
-	@Then("the user should be able to add all the details and save it")
-	public void the_user_should_be_able_to_add_all_the_details_and_save_it()
+	@Then("the user provides visit date {string} and description {string}")
+	public void the_user_provides_visit_date_and_description(String date, String description)
 	{
-		logger.info("Entered description: Reg check up and submitting Add Visit form.");
-		addVisitPage.addVisitDetails(today, REGULAR_VISIT);
+		if (date.equalsIgnoreCase("TODAY")) {
+			date=today;
+		}
+		  logger.info("Entering date: {} and description: {}", date, description);
+		  this.savedDescription = description;  
+		    addVisitPage.addVisitDetails(date, description);
 	}
 	@Then("user should get a success message")
 	public void user_should_get_a_success_message()
@@ -74,31 +85,36 @@ public class AddVisitSteps {
 	@Then("the user should be able to view the visit in the owners page")
 	public void the_user_should_be_able_to_view_the_visit_in_the_owners_page()
 	{
+		String expectedDescription = this.savedDescription;
 		boolean found = false;
+		String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
 		By successMsg=By.id("success-message");
 		basePage.waitForElementDisappear(successMsg);
 		List<WebElement> table=addVisitPage.getOwnerVisitTableData();
-		for (WebElement tabledata : table) {
-		    List<WebElement> columns = tabledata.findElements(By.tagName("td"));
-		    if (columns.size() > 1) {
-		        String desc = columns.get(1).getText(); // 1 = second column (index is 0-based)
-		        logger.info("Visit is listed in Owner's page: {}", desc);
-		        if (desc.contains("Reg")) {
-		            found = true;
-		            break;
-		        }
-		        
-		    }
-		}
-		basePage.waitForElementTextToContain(By.xpath("//table[@class='table-condensed']//td[2]"), REGULAR_VISIT);
-		logger.info("Visit added successfully");
-		Assert.assertTrue("Expected visit description not found in owner's page",found );
+	    for (WebElement row : table) {
+	        List<WebElement> columns = row.findElements(By.tagName("td"));
+	        if (columns.size() >= 2) {
+	            String dateText = columns.get(0).getText().trim(); // Assuming first column is date
+	            String descText = columns.get(1).getText().trim(); // Assuming second column is description
+
+	            logger.info("Visit found - Date: {}, Description: {}", dateText, descText);
+
+	            if (dateText.equals(today) && descText.equals(expectedDescription)) {
+	                found = true;
+	                break;
+	            }
+	        }
+	    }
+
+	    Assert.assertTrue("Expected visit with correct date and description not found in owner's page", found);
 		}
 		
 	@Then("the user should be able to view the visit in the visit page")
 	public void the_user_should_be_able_to_view_the_visit_in_the_visit_page() throws InterruptedException
 	{
+		String expectedDescription = this.savedDescription;
+	    
 		addVisitPage.addVisitButtonClick();
 	List<WebElement> visitData=addVisitPage.getPreviousVisitData();
 	if (!visitData.isEmpty()) {
@@ -107,18 +123,57 @@ public class AddVisitSteps {
 	}
 	for(WebElement visitDesc: visitData)
 	{
-		if(visitDesc.getText().contains("Reg"))
+		if(visitDesc.getText().contains(expectedDescription))
 		{
 			logger.info("Visit is displayed in Previous Visits section: {}", visitDesc.getText());
-			Assert.assertTrue("Expected visit not found in previous visits table", visitDesc.getText().contains("Reg"));
-
+			Assert.assertTrue("Expected visit not found in previous visits table", visitDesc.getText().contains(expectedDescription));
 		}
 	}
+	
+
+	}
+	@Then("the visit details should be added to the database for owner {string} and pet {string}")
+	public void the_visit_details_should_be_added_to_the_database_for_owner_and_pet(String ownerIdStr, String petName) throws SQLException {
+		 String dbFormattedDate = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		String expectedDescription = this.savedDescription;
+		String petidStr=addVisitPage.getLastExtractedPetId();
+		int ownerId = Integer.parseInt(ownerIdStr);
+	    int petId = Integer.parseInt(petidStr);
+
+		    DBUtils.insertVisitIntoDB(
+		        ownerId,
+		        petId,
+		        dbFormattedDate,
+		        expectedDescription
+		    );
+
+			    logger.info("✔ Visit details inserted into DB for owner {}, pet {}, date {}, desc '{}'",
+			                ownerId, petId, dbFormattedDate, expectedDescription);
+			
+			    boolean isPresent = DBUtils.isVisitPresentInDB(ownerId, petId, dbFormattedDate, expectedDescription);
+			    Assert.assertTrue("Visit not found in DB for ownerId: " + ownerId + ", petId: " + petId, isPresent);
+			    logger.info("✔ Visit exists in DB for owner {}, pet {}, date {}, description '{}'", ownerId, petId, dbFormattedDate, expectedDescription);
 	}
 	
 	/*-------------------------------------------------------------------------------------------------------------
 	NEGATIVE TEST CASE
 	--------------------------------------------------------------------------------------------------------------*/
+	@Given("the user is on the owners page")
+	public void the_user_is_on_the_owners_page()
+	{
+		driver=DriverFactory.getDriver();
+		driver.get(ConfigReader.get("url")+"/owners/9");
+		String currUrl=driver.getCurrentUrl();
+		logger.info("Navigated to Owner page. Current URL: {}", currUrl);
+		Assert.assertTrue(currUrl.contains("owners"));
+		basePage=new BasePage(driver);
+		addVisitPage=new AddVisitPage(driver);
+	}
+	@When("the user clicks on Add visit link")
+	public void the_user_clicks_on_Add_visit_link() throws InterruptedException
+	{
+		addVisitPage.addVisitButtonClick();
+	}
 	@When("the user provides the valid date and empty description")
 	public void the_user_provides_the_valid_date_and_empty_description()
 	{
@@ -128,6 +183,7 @@ public class AddVisitSteps {
 	@Then("the user will get a field validation error")
 	public void the_user_will_get_a_field_validation_error()
 	{
+		basePage.waitForElement(By.className("help-inline"));
 		String descValError=driver.findElement(By.className("help-inline")).getText();
 		logger.info("Validation error displayed: {}", descValError);
 		Assert.assertTrue(descValError.contains("not be blank"));

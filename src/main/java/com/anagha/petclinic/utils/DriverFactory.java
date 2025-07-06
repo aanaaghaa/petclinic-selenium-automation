@@ -2,18 +2,16 @@ package com.anagha.petclinic.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-   private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-   
     public static WebDriver initDriver() {
         String browser = ConfigReader.get("browser").toUpperCase();
-       // System.out.println("[INIT] Thread: " + Thread.currentThread().getId() + " - Initializing " + browser + " driver");
 
         switch (BrowserType.valueOf(browser)) {
             case FIREFOX:
@@ -32,6 +30,7 @@ public class DriverFactory {
         }
 
         getDriver().manage().window().maximize();
+        System.out.println("🚀 WebDriver initialized in Thread: " + Thread.currentThread().getId());
         return getDriver();
     }
 
@@ -46,22 +45,14 @@ public class DriverFactory {
         if (currentDriver != null) {
             try {
                 currentDriver.quit();
-                System.out.println("Browser closed successfully for thread " + Thread.currentThread().getId());
+                System.out.println("✅ Browser closed for thread " + Thread.currentThread().getId());
             } catch (Exception e) {
-                System.err.println("Error while quitting browser: " + e.getMessage());
+                System.err.println("❌ Error while quitting browser: " + e.getMessage());
             } finally {
-                driver.remove(); // Important for memory cleanup
+                driver.remove(); // Always clean up
             }
         } else {
-            System.err.println("No driver found to quit for thread " + Thread.currentThread().getId());
+            System.err.println("⚠️ No driver found to quit for thread " + Thread.currentThread().getId());
         }
     }
-
-	public static void setDriver(WebDriver driver2) {
-		// TODO Auto-generated method stub
-		
-	}
 }
-
-
-

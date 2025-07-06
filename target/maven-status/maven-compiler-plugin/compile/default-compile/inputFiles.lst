@@ -1,3 +1,4 @@
+C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\base\BasePage.java
 C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\pages\AddOwnersPage.java
 C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\pages\AddPetPage.java
 C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\pages\AddVisitPage.java
@@ -6,4 +7,5 @@ C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\p
 C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\pages\VeterinariansListPage.java
 C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\utils\BrowserType.java
 C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\utils\ConfigReader.java
+C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\utils\DBUtils.java
 C:\Users\Anagha\eclipse-workspace\PetClinicAutomation\src\main\java\com\anagha\petclinic\utils\DriverFactory.java

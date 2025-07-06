@@ -30,7 +30,7 @@ public class HomePageSteps {
 	@Given("the user launches the petclinic website")
 	public void the_user_launches_the_petclinic_website()
 	{
-		driver=DriverFactory.initDriver();
+		driver=DriverFactory.getDriver();
 		String url = ConfigReader.get("url");
 		logger.info("Launching PetClinic website at URL: " + url);
 		if (driver == null || url == null) {

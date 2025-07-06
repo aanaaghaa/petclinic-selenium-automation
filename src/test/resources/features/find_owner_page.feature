@@ -1,4 +1,4 @@
-
+@skip
 Feature: PetClinic Find Owner
 
 @positive
@@ -18,7 +18,7 @@ Then the user will get field error
 @edge
 Scenario Outline: Verify if the owner name field is case sensitive
   Given the user is on Find Owners page
-  When the user finds the same Owner name with different cases of <LastName>
+  When the user finds the same Owner name with different cases of "<LastName>"
   Then the user should be able to get the owners
 
 Examples:

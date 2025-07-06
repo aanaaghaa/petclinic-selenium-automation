@@ -12,6 +12,7 @@ import com.anagha.petclinic.base.BasePage;
 public class AddVisitPage extends BasePage{
 	WebDriver driver;
 	
+	
 	public AddVisitPage(WebDriver driver)
 	{
 		super(driver);
@@ -20,6 +21,7 @@ public class AddVisitPage extends BasePage{
 	public void addVisitButtonClick() throws InterruptedException
 	{
 		WebElement addVisitLink=driver.findElement(By.xpath("//a[text()='Add Visit']"));
+		waitForElement(By.xpath("//a[text()='Add Visit']"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addVisitLink);
 		 Thread.sleep(500);
 		addVisitLink.click();
@@ -36,5 +38,31 @@ public class AddVisitPage extends BasePage{
 	public List<WebElement> getPreviousVisitData() {
 		return driver.findElements(By.xpath("//b[text()='Previous Visits']/following-sibling::table//td"));
 		}
+	
+	private String lastExtractedPetId; // instance variable to store petId
+
+	public void clickAddVisitLinkForPet(String petName) throws InterruptedException {
+	    String xpath = "//tr//dd[contains(text(),'" + petName + "')]//ancestor::tr//td//a[contains(text(),'Add Visit')]";
+	    WebElement addVisitLink = driver.findElement(By.xpath(xpath));
+
+	    // Extract petId before navigating away
+	    String href = addVisitLink.getAttribute("href");
+	    String[] parts = href.split("/");
+	    for (int i = 0; i < parts.length; i++) {
+	        if (parts[i].equalsIgnoreCase("pets") && i + 1 < parts.length) {
+	            lastExtractedPetId = parts[i + 1]; // store it for later
+	            break;
+	        }
+	    }
+
+	    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addVisitLink);
+	    Thread.sleep(500);
+	    addVisitLink.click();
+	}
+
+	public String getLastExtractedPetId() {
+	    return lastExtractedPetId;
+	}
+
 
 }

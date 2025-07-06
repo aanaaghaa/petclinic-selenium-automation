@@ -1,6 +1,9 @@
 package com.anagha.petclinic.stepdefinitions;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,13 +11,16 @@ import org.openqa.selenium.WebElement;
 
 import com.anagha.petclinic.base.BasePage;
 import com.anagha.petclinic.pages.AddOwnersPage;
-import com.anagha.petclinic.utils.ConfigReader;
 import com.anagha.petclinic.utils.DriverFactory;
+import com.anagha.petclinic.utils.ExcelUtils;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import junit.framework.Assert;
+
+import com.anagha.petclinic.utils.ConfigReader;
+import com.anagha.petclinic.utils.DBUtils;
 
 public class AddOwnerPageSteps {
 	
@@ -23,6 +29,7 @@ public class AddOwnerPageSteps {
 	WebDriver driver;
 	AddOwnersPage addOwnersPage;
 	BasePage basePage;
+	List<String> submittedOwners = new ArrayList<>();
 	
 	/*-------------------------------------------------------------------------------------------------------------
 	POSITIVE TEST CASE
@@ -30,26 +37,51 @@ public class AddOwnerPageSteps {
 	@Given("the user is on the Add Owner page")
 	public void the_user_is_on_the_Add_Owner_page()
 	{
-		driver=DriverFactory.initDriver();
-		driver.get(ConfigReader.get("url")+"/owners/new");
+		driver=DriverFactory.getDriver();
 		addOwnersPage=new AddOwnersPage(driver);
 		basePage=new BasePage(driver);
+		addOwnersPage.navigateToAddOwnerPage();
 		String currUrl=driver.getCurrentUrl();
 		logger.info("Navigated to Add Owner page. Current URL: {}", currUrl);
 		Assert.assertTrue(currUrl.contains("/new"));
 	}
-	@When("the user enters all valid owner details")
-	public void the_user_enters_all_valid_owner_details()
+	@When("the user enters all valid owner details from Excel and confirm success")
+	public void the_user_enters_all_valid_owner_details_from_Excel_and_confirm_success() throws SQLException, InterruptedException
 	{
-		addOwnersPage=new AddOwnersPage(driver);
 		logger.info("Entering valid owner details and submitting form.");
-		addOwnersPage.addOwnerDetails("Anagha", "SriRam", "Peepal Tree Apt", "BLR", "1234567890");
+
+		String filePath = ConfigReader.get("testdata_path_owner");
+	    List<Map<String, String>> owners = ExcelUtils.getExcelData(filePath, "Sheet1");
+
+	    for (Map<String, String> data : owners) {
+	        addOwnersPage.navigateToAddOwnerPage();   
+	        String fullName = addOwnersPage.addOwnerFromExcelRow(data);
+	        submittedOwners.add(fullName);
+	    }
+ 
 	}
-	@Then("the new owner should be added successfully")
-	public void the_new_owner_should_be_added_successfully()
+	@Then("all the owners added through UI should be present in the database")
+	public void all_owners_added_through_UI_should_be_present_in_the_database() throws SQLException {
+		 List<String> dbOwners = DBUtils.getAllOwnerNames();
+
+		    for (String fullName : submittedOwners) {
+		        Assert.assertTrue("❌ Owner missing in DB: " + fullName, dbOwners.contains(fullName));
+		        logger.info("✔ Owner '{}' exists in DB.", fullName);
+		    }
+	}
+	
+	@Then("the added information should be visible on the Owner Information page")
+	public void the_added_information_should_be_visible_on_the_Owner_Information_page() throws InterruptedException
 	{
-		logger.info("Verifying that new owner has been successfully added.");
-		driver.findElement(By.xpath("//div[contains(@class, 'xd-container')]"));
+		  String lastOwnerFullName  = submittedOwners.get(submittedOwners.size() - 1);
+		  basePage.waitForElement(By.cssSelector("table.table"));
+		  WebElement ownerTable=driver.findElement(By.cssSelector("table.table"));
+		  String tableText = ownerTable.getText().toLowerCase();
+		  Assert.assertTrue("❌ Owner name not found on Owner Information page!",
+		            tableText.contains(lastOwnerFullName.toLowerCase()));
+		    logger.info("✔ Owner '{}' is visible on the Owner Information page.", lastOwnerFullName);
+		    basePage.waitForElement(By.cssSelector("h2"));
+		    driver.findElement(By.cssSelector("h2")).getText().contains("Owner Information");
 	}
 	@Then("the user should be able to edit the owner")
 	public void the_user_should_be_able_to_edit_the_owner()
@@ -58,34 +90,14 @@ public class AddOwnerPageSteps {
 		logger.info("Checking if Edit Owner button is enabled.");
 		if(!addOwnerBtn.isEnabled())
 		{
+			
 			logger.warn("Edit Owner button is disabled.");
+			Assert.assertTrue("❌ Edit button is disabled", addOwnerBtn.isEnabled());
 		}else 
 		{
 			logger.info("Edit Owner button is enabled.");
-
+			Assert.assertTrue("❌ Edit button not visible", addOwnerBtn.isDisplayed());
 		}
-	}
-	@Then("the added information should be visible on the Owner Information page")
-	public void the_added_information_should_be_visible_on_the_Owner_Information_page()
-	{
-		logger.info("Fetching and displaying Owner Information table data.");
-		List<WebElement>headers=driver.findElements(By.xpath("//table/tbody/tr/th"));
-		for(WebElement th: headers)
-		{
-			System.out.println(th.getText());
-		}
-		List<WebElement>ownerData=driver.findElements(By.xpath("//table/tbody/tr/td"));
-		for(WebElement td: ownerData)
-		{
-			System.out.println(td.getText());
-		}
-	}
-	@Then("a confirmation or success message should be displayed")
-	public void a_confirmation_or_success_message_should_be_displayed()
-	{
-		String successMsg=driver.findElement(By.id("success-message")).getText();
-		logger.info("Success message displayed: {}", successMsg);
-		Assert.assertTrue(successMsg.contains("New Owner Created"));
 	}
 	@Then("the user should be able to add a new pet for the owner")
 	public void the_user_should_be_able_to_add_a_new_pet_for_the_owner()
@@ -95,20 +107,23 @@ public class AddOwnerPageSteps {
 		if(!newPetBtn.isEnabled())
 		{
 			logger.warn("Add New Pet button is disabled.");
+			Assert.assertTrue("❌ Edit button is disabled", newPetBtn.isEnabled());
 		}
 		else
 		{
 			logger.info("Add New Pet button is enabled.");
-
+			Assert.assertTrue("❌ Edit button not visible", newPetBtn.isDisplayed());
 		}
-	}
+		}
+	
+
 	
 	/*-------------------------------------------------------------------------------------------------------------
 	NEGATIVE TEST CASE
 	--------------------------------------------------------------------------------------------------------------*/
 
 	@When("the user keeps all the fields empty")
-	public void the_user_keeps_all_the_fields_empty()
+	public void the_user_keeps_all_the_fields_empty() throws InterruptedException
 	{
 		addOwnersPage=new AddOwnersPage(driver);
 		logger.info("Submitting the Add Owner form with all fields empty.");
@@ -138,7 +153,7 @@ public class AddOwnerPageSteps {
 	--------------------------------------------------------------------------------------------------------------*/
 	
 	@When("the user will add Name of five hundred characters and all other valid details")
-	public void the_user_will_add_Name_of_five_hundred_characters_and_provide_all_other_valid_details()
+	public void the_user_will_add_Name_of_five_hundred_characters_and_provide_all_other_valid_details() throws InterruptedException
 	{
 		logger.info("Entered Entering a 500-character long first name and remaining valid details and submitted form.");
 		addOwnersPage.addOwnerDetails("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

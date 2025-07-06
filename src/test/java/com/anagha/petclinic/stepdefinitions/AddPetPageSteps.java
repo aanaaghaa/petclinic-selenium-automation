@@ -1,15 +1,20 @@
 package com.anagha.petclinic.stepdefinitions;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.anagha.petclinic.base.BasePage;
 import com.anagha.petclinic.pages.AddPetPage;
 import com.anagha.petclinic.utils.ConfigReader;
 import com.anagha.petclinic.utils.DriverFactory;
+import com.anagha.petclinic.utils.ExcelUtils;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,40 +28,59 @@ public class AddPetPageSteps {
 	AddPetPage addPetPage;
 	WebDriverWait wait;
 	BasePage basePage;
+	List<String> submittedPets = new ArrayList<>();
 
 	/*-------------------------------------------------------------------------------------------------------------
 	POSITIVE TEST CASE
 	--------------------------------------------------------------------------------------------------------------*/
 	
-	@Given("the user is on Add new pet page")
-public void the_user_is_on_Add_new_pet_page()
+	@Given("the user is on Add new pet page for owner with id {string}")
+public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 {
-		driver = DriverFactory.initDriver();
+		driver=DriverFactory.getDriver();
 		addPetPage=new AddPetPage(driver);
 		basePage=new BasePage(driver);
-		driver.get(ConfigReader.get("url")+"/owners/9/pets/new");
+		driver.get(ConfigReader.get("url")+"/owners/" + ownerId + "/pets/new");
 		logger.info("Navigated to Add New Pet page. Current URL: {}", driver.getCurrentUrl());
 		}
 	
-	@When("the user provides valid pet details")
-	public void the_user_provides_valid_pet_details()
-	{
-		logger.info("Entering valid pet details: name='doog', birthDate='11-01-2025', type='dog'.");
-		addPetPage.addPetDetails("doog", "11-01-2025", "dog");
-	}
-	@When("clicks on the Add Pet button")
-	public void clicks_on_the_Add_Pet_button()
+	@When("the user provides valid pet details from Excel and confirm success")
+	public void the_user_provides_valid_pet_details_from_Excel_and_confirm_success() throws SQLException
 	{
 		
-		logger.info("Clicked on Add Pet button.");
-		addPetPage.addPetButtonClick();
+		String filePath = ConfigReader.get("testdata_path_pet");
+	    List<Map<String, String>> petList = ExcelUtils.getPetExcelData(filePath, "Sheet1");
+
+	    for (Map<String, String> pet : petList) {
+			 String ownerid = pet.get("ownerid");
+			    driver.get(ConfigReader.get("url") + "/owners/" + ownerid + "/pets/new");
+			    addPetPage.addPetFromExcel(pet);
+			    addPetPage.addPetToDB(pet);
+	        logger.info("Pet added: " + pet.get("petname"));
+	        String petName = pet.get("petname");
+		    String ownerId = pet.get("ownerid");
+		    submittedPets.add(petName.toLowerCase() + "_" + ownerId);
+	    }
+    
 	}
-	
-	@Then("the pet should be added under the owner")
-	public void the_pet_should_be_added_under_the_owner()
+	@Then("all the pets added through UI should be present in the database")
+	public void all_the_pets_added_through_UI_should_be_present_in_the_database()
 	{
-		driver.findElement(By.xpath("//h2[text()='Pets and Visits']"));
-		logger.info("Verified that pet has been added under Pets and Visits section.");
+		
+		 String lastPetIdentifier = submittedPets.get(submittedPets.size() - 1); // eg. "bruno_101"
+		    String petName = lastPetIdentifier.split("_")[0];
+
+		    basePage.waitForElement(By.cssSelector("table.table"));
+		    WebElement table = driver.findElement(By.xpath("//h2[contains(text(), 'Pets and Visits')]/following-sibling::table"));
+		    String tableText = table.getText().toLowerCase();
+
+		    Assert.assertTrue("❌ Pet not found on page: " + petName, tableText.contains(petName));
+		    logger.info("✔ Pet '{}' is visible on the Owner Information page.", petName);
+
+		    // Optional header check
+		    basePage.waitForElement(By.cssSelector("h2"));
+		    String headerText = driver.findElement(By.cssSelector("h2")).getText();
+		    Assert.assertTrue("❌ Owner Information page header missing!", headerText.contains("Owner Information"));
 	}
 	@Then("the owner should be able to edit pet details")
 	public void the_owner_should_be_able_to_edit_pet_details()
@@ -65,7 +89,7 @@ public void the_user_is_on_Add_new_pet_page()
 		logger.info("Checking if Edit Pet button is enabled.");
 		if(!editPetBtn.isEnabled())
 		{
-			System.out.println("Edit Pet is not clickable");
+			logger.info("Edit Pet button is disabled.");
 		}else
 		{
 			logger.info("Edit Pet button is enabled.");
@@ -85,15 +109,6 @@ public void the_user_is_on_Add_new_pet_page()
 		}
 		
 	}
-	@Then("the success message New Pet has been Added should be displayed")
-	public void the_success_message_New_Pet_has_been_Added_should_be_displayed()
-	{
-		By successMsg=By.id("success-message");
-		basePage.waitForElement(successMsg);
-		String popUpMsg=driver.findElement(successMsg).getText();
-		logger.info("Success message displayed: {}", popUpMsg);
-		Assert.assertTrue("Expected success message not found!", popUpMsg.contains("New Pet has been Added"));
-	}
 	
 	/*-------------------------------------------------------------------------------------------------------------
 	NEGATIVE TEST CASE
@@ -104,7 +119,7 @@ public void the_user_is_on_Add_new_pet_page()
 	{
 		logger.info("Submitting Add Pet form without pet name.");
 		addPetPage.addPetDetails(" ","11-01-2025", "dog");
-		addPetPage.addPetButtonClick();
+		addPetPage.clickAddPetButton();
 	}
 	@Then("the user should get a field validation error")
 	public void the_user_should_get_a_field_validation_error()
@@ -123,7 +138,7 @@ public void the_user_is_on_Add_new_pet_page()
 	{
 		logger.info("Entering valid pet name and type. Name: 'dogg', Type: 'dog', future birth date: 11-01-2026 and submitting form.");
 		addPetPage.addPetDetails("dooog", "11-01-2026", "dog");
-		addPetPage.addPetButtonClick();
+		addPetPage.clickAddPetButton();
 	}
 	@Then("the user should get a validation error")
 	public void the_user_should_get_a_validation_error()

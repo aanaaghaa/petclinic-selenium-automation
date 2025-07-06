@@ -1,7 +1,9 @@
 com\anagha\petclinic\utils\BrowserType.class
 com\anagha\petclinic\utils\DriverFactory.class
 com\anagha\petclinic\pages\AddOwnersPage.class
+com\anagha\petclinic\base\BasePage.class
 com\anagha\petclinic\pages\AddPetPage.class
+com\anagha\petclinic\utils\DBUtils.class
 com\anagha\petclinic\utils\DriverFactory$1.class
 com\anagha\petclinic\pages\VeterinariansListPage.class
 com\anagha\petclinic\utils\ConfigReader.class
