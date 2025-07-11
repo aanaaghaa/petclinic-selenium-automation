@@ -11,7 +11,7 @@ import com.anagha.petclinic.utils.DriverFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 	/**Step definition class for Find Owners functionality
 	* Handles positive, negative, and edge scenarios for searching owners by last name

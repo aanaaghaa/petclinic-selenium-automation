@@ -12,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.anagha.petclinic.base.BasePage;
 import com.anagha.petclinic.utils.DBUtils;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.openqa.selenium.support.ui.Select;
 

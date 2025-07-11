@@ -19,7 +19,7 @@ import com.anagha.petclinic.utils.ExcelUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Step definition class for Cucumber scenarios related to adding a pet.

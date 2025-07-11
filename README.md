@@ -50,6 +50,25 @@ src/
 •	Read test data from Excel and store valid entries in DB
 •	Validation for empty fields and overly long names (negative/edge)
 
+Jenkins Integration
+
+This project is configured with Jenkins CI/CD to automate test runs and generate reports.
+
+Jenkins Job Includes:
+ Git pull on build
+ Maven goal: `clean test`
+ HTML/Cucumber test report publishing
+ Runs on push or manual trigger
+
+Jenkins Plugins Used:
+ Maven Integration Plugin
+ Git Plugin
+ HTML Publisher Plugin
+ Cucumber Reports Plugin
+
+Jenkins can be accessed locally at:  
+http://localhost:8090
+
 How to Run
  1. Clone the Repo
 ```bash
