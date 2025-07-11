@@ -18,7 +18,7 @@ import io.cucumber.junit.CucumberOptions;
 		features="src/test/resources/features",
 		glue="com.anagha.petclinic.stepdefinitions",
 		tags="not @positive and not @skip",
-		plugin= {"pretty", "html:target/cucumber-reports"},
+		plugin= {"pretty", "html:target/cucumber-reports/index.html"},
 		monochrome=true
 		)
 
