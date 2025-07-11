@@ -4,6 +4,6 @@ com\anagha\petclinic\stepdefinitions\AddPetPageSteps.class
 com\anagha\petclinic\stepdefinitions\FindOwnersPageSteps.class
 com\anagha\petclinic\testrunner\RunCucumberTest.class
 com\anagha\petclinic\stepdefinitions\HomePageSteps.class
-com\anagha\petclinic\hooks\Hooks.class
 com\anagha\petclinic\stepdefinitions\AddVisitSteps.class
 tests\DBTests.class
+com\anagha\petclinic\stepdefinitions\Hooks.class

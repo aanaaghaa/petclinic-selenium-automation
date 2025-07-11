@@ -1,6 +1,9 @@
 @skip
 Feature: PetClinic Home Page Navigation
+This feature verifies the proper loading and UI elements on the PetClinic home page,
+including title, logo visibility, and top menu items.
 
+# ------------------------ POSITIVE SCENARIO ------------------------
 Scenario: Verify the user lands on home page
 Given the user launches the petclinic website 
 When user views the home page

@@ -1,6 +1,5 @@
 package com.anagha.petclinic.utils;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -9,8 +8,16 @@ import java.util.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * Utility class to read and parse Excel data into a list of maps.
+ * Supports reading owner and pet-related test data from .xlsx files.
+ */
+
 public class ExcelUtils {
 
+	/**
+     * Reads Excel data for Owners from the specified file and sheet.
+     * Converts each row into a Map<String, String> using header row as keys.**/
 	public static List<Map<String, String>> getExcelData(String filePath, String sheetName) {
 	    List<Map<String, String>> dataList = new ArrayList<>();
 	    try (FileInputStream fis = new FileInputStream(filePath);
@@ -45,7 +52,6 @@ public class ExcelUtils {
 	                    }
 	                }
 	                dataMap.put(key, value);
-
 	            }
 	            dataList.add(dataMap);
 	        }
@@ -57,6 +63,10 @@ public class ExcelUtils {
 	    return dataList;
 	}
 	
+	/**
+     * Reads Excel data for Pets, including special handling for date fields.
+     * Converts each row into a Map<String, String> using header row as keys.
+     * Formats date fields as dd-MM-yyyy.**/
 	public static List<Map<String, String>> getPetExcelData(String filePath, String sheetName) {
 	    List<Map<String, String>> dataList = new ArrayList<>();
 	    try (FileInputStream fis = new FileInputStream(filePath);
@@ -64,7 +74,7 @@ public class ExcelUtils {
 
 	        Sheet sheet = workbook.getSheet(sheetName);
 	        Row headerRow = sheet.getRow(0);
-	        int totalColumns = headerRow.getPhysicalNumberOfCells(); // only count actual headers
+	        int totalColumns = headerRow.getPhysicalNumberOfCells(); 
 
 	        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 	            Row currentRow = sheet.getRow(i);
@@ -92,7 +102,6 @@ public class ExcelUtils {
 	                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	                                value = sdf.format(cell.getDateCellValue());
 	                            } else {
-	                                // For telephone or other numerics
 	                                value = String.valueOf((long) cell.getNumericCellValue());
 	                            }
 	                            break;
@@ -112,10 +121,6 @@ public class ExcelUtils {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-
 	    return dataList;
 	}
-
-	
-
 }

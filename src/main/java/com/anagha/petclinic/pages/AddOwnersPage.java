@@ -20,10 +20,18 @@ import junit.framework.Assert;
 
 import org.openqa.selenium.support.PageFactory;
 
+/**
+ * Page Object Model class for the "Add Owner" functionality of the PetClinic application.
+ * Navigates to the Add Owner page.
+ * Interacts with the Add Owner form fields using PageFactory.
+ * Fills out the form and submits data via UI.
+ * Inserts and verifies owner data in the database for consistency.**/
 
 public class AddOwnersPage extends BasePage{
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AddOwnersPage.class);	
 	WebDriver driver;
+	
+	 // Web elements on the Add Owner form, initialized using PageFactory
 	@FindBy(id = "firstName")
     private WebElement firstNameField;
 
@@ -50,12 +58,15 @@ public class AddOwnersPage extends BasePage{
 		  
 	}
 	
+	//Re-usable method to navigate to Add owner page
 	public void navigateToAddOwnerPage() {
 		
 	    driver.get(ConfigReader.get("url") + "/owners/new");
 	    waitForElement(By.cssSelector("div.container.xd-container"));
 	}
 	
+	// Reads one row of test data from Excel and uses it to add a new owner in the UI.
+	// Also inserts the same data into the database for validation and consistency across layers.
 	public String addOwnerFromExcelRow(Map<String, String> data) throws InterruptedException, SQLException {
 	    String firstname = data.get("firstname");
 	    String lastname = data.get("lastname");
@@ -74,7 +85,7 @@ public class AddOwnersPage extends BasePage{
 
 	    return firstname + " " + lastname;
 	}
-
+	//Fill the owner details in Add Owner Page
 	public void addOwnerDetails(String firstName, String lastName, String address, String city, String telephone) throws InterruptedException
 	{
 		waitForElement(By.id("add-owner-form"));
