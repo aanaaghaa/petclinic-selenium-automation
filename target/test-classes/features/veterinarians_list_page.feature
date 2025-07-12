@@ -1,4 +1,3 @@
-
 Feature: View list of Veterinarians
 This feature verifies that the user can successfully view all available veterinarians from the home page.
 

@@ -1,4 +1,3 @@
-
 Feature: PetClinic Add Pet
 This feature validates the Add Pet functionality under various scenarios.
 It includes positive flow, form validations, edge-case handling, and database verification.
@@ -18,7 +17,6 @@ Scenario: Add a new pet to an existing owner
  | 9			 |
 
 # ------------------------ NEGATIVE SCENARIO ------------------------  
-@negative
 Scenario Outline: Add a pet without pet name
 
 Given the user is on Add new pet page for owner with id "<ownerId>"
@@ -30,7 +28,7 @@ Examples:
 | 9				| 				| 01-10-2024 | dog		 |
 
  # ------------------------ EDGE SCENARIO ------------------------
-@edge
+
 Scenario Outline: Set the birth date in future date
 
 Given the user is on Add new pet page for owner with id "<ownerId>"
