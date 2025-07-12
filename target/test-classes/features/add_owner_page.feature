@@ -5,7 +5,7 @@ Feature: PetClinic Add Owner
 
 # ------------------------ POSITIVE SCENARIO ------------------------
  
-@positive
+
 
 Scenario: Add a new owner with valid details
 Given the user is on the Add Owner page

@@ -4,7 +4,7 @@ This feature validates the "Find Owners" functionality of the PetClinic applicat
 including positive, negative, and edge scenarios such as case-insensitive searches.
 
 # ------------------------ POSITIVE SCENARIO ------------------------
-@positive
+
 
 Scenario Outline: Search existing owner by last name and verify their profile
 Given the user is on Find Owners page

@@ -4,7 +4,7 @@ This feature validates the Add Pet functionality under various scenarios.
   It includes positive flow, form validations, edge-case handling, and database verification.
   
 # ------------------------ POSITIVE SCENARIO ------------------------
-@positive  
+  
 Scenario Outline: Add visit to pet for multiple owners
 Given the user is on the owners page owner with "<ownerId>"
 When the user clicks on Add visit link for the pet "<petName>"
