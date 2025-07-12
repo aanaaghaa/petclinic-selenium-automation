@@ -176,8 +176,10 @@ public class AddOwnerPageSteps {
 	
 	//User will be navigated to the error page
 	@Then("the user should get a error message")
-	public void the_user_should_get_a_error_message()
+	public void the_user_should_get_a_error_message() throws InterruptedException
 	{
+		basePage.waitForElement(By.xpath("//div[contains(@class,'xd-container')]"));
+		Thread.sleep(1000);
 		String errorMsg=driver.findElement(By.xpath("//div[contains(@class,'xd-container')]")).getText();
 		logger.info("Error message received: {}", errorMsg);
 		Assert.assertTrue(errorMsg.contains("Something happened"));

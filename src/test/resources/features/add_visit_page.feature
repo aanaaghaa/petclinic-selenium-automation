@@ -1,10 +1,9 @@
-@skip
 Feature: Adding a visit to pet and check if its reflecting in the history
 This feature validates the Add Pet functionality under various scenarios.
   It includes positive flow, form validations, edge-case handling, and database verification.
   
 # ------------------------ POSITIVE SCENARIO ------------------------
-@positive  
+  
 Scenario Outline: Add visit to pet for multiple owners
 Given the user is on the owners page owner with "<ownerId>"
 When the user clicks on Add visit link for the pet "<petName>"
@@ -22,7 +21,6 @@ Examples:
     | 5	      |	Bella				| TODAY				|  Vaccination		|
 
 # ------------------------ NEGATIVE SCENARIO ------------------------
-@negative
 
 Scenario Outline: Verify if the user can submit empty description visit
 Given the user is on the owners page owner with "<ownerId>"
@@ -35,7 +33,6 @@ Examples:
 	| 9 		 |
 
 # ------------------------ EDGE SCENARIO ------------------------
-@edge
 
 Scenario Outline: Verify if the user can submit a visit with long description
 Given the user is on the owners page owner with "<ownerId>"

@@ -1,11 +1,10 @@
-
 Feature: PetClinic Add Owner
   This feature tests the functionality of adding a new Owner in the PetClinic application.
   Scenarios include positive, negative, and edge cases to validate form behavior, DB integration, and UI validations.
 
 # ------------------------ POSITIVE SCENARIO ------------------------
  
-@positive
+
 
 Scenario: Add a new owner with valid details
 Given the user is on the Add Owner page
@@ -16,7 +15,6 @@ And the user should be able to add a new pet for the owner
 And the user should be able to edit the owner
   
 # ------------------------ NEGATIVE SCENARIO ------------------------   
-@negative
 
 Scenario Outline: Add a new owner with empty fields
 
@@ -29,7 +27,7 @@ Examples:
 | 					|					 | 				 | 			|						|
 
  # ------------------------ EDGE SCENARIO ------------------------
-@edge
+
 
 Scenario Outline: Add a new owner with long name 
 

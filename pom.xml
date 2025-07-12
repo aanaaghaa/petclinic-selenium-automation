@@ -112,6 +112,29 @@
   <version>5.7.4</version>
 </plugin>
 
+<plugin>
+    <groupId>net.masterthought</groupId>
+    <artifactId>maven-cucumber-reporting</artifactId>
+    <version>5.7.0</version>
+    <executions>
+        <execution>
+            <id>generate-report</id>
+            <phase>verify</phase>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <configuration>
+                <projectName>PetClinic</projectName>
+                <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
+                <cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
+                <inlineCss>true</inlineCss>
+                <inlineJs>true</inlineJs>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
+
     </plugins>
   </build>
 </project>

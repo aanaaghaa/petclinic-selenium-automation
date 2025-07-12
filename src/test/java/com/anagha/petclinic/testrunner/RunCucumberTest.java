@@ -17,8 +17,9 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
 		features="src/test/resources/features",
 		glue="com.anagha.petclinic.stepdefinitions",
-		tags="not @positive and not @skip",
-		plugin= {"pretty", "html:target/cucumber-reports/index.html"},
+		plugin= {"pretty", "json:target/cucumber.json",
+				"summary"},
+				
 		monochrome=true
 		)
 

@@ -1,4 +1,3 @@
-@skip
 Feature: PetClinic Home Page Navigation
 This feature verifies the proper loading and UI elements on the PetClinic home page,
 including title, logo visibility, and top menu items.

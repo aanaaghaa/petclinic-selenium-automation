@@ -75,13 +75,13 @@ public class AddOwnersPage extends BasePage{
 	    String telephone = data.get("telephone");
 
 	    addOwnerDetails(firstname, lastname, address, city, telephone);
-
+	    waitForElementDisappear(By.id("success-message"));
 	    String successMsg = driver.findElement(By.id("success-message")).getText();
 	    logger.info("Success message displayed: {}", successMsg);
 	    Assert.assertTrue(successMsg.contains("New Owner Created"));
 
 	    DBUtils.insertOwnerToDB(firstname, lastname, address, city, telephone);
-	    logger.info("✔ Inserted into your DB as well.");
+	    logger.info("Inserted into your DB as well.");
 
 	    return firstname + " " + lastname;
 	}
