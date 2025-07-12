@@ -1,4 +1,4 @@
-@skip
+
 Feature: PetClinic Find Owner
 This feature validates the "Find Owners" functionality of the PetClinic application,
 including positive, negative, and edge scenarios such as case-insensitive searches.
