@@ -124,16 +124,13 @@
                 <goal>generate</goal>
             </goals>
             <configuration>
-                <projectName>PetClinic</projectName>
-                <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
+                <projectName>PetClinic Automation</projectName>
+                <outputDirectory>${project.build.directory}/cucumber-html-reports</outputDirectory>
                 <cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
-                <inlineCss>true</inlineCss>
-                <inlineJs>true</inlineJs>
             </configuration>
         </execution>
     </executions>
 </plugin>
-
 
     </plugins>
   </build>

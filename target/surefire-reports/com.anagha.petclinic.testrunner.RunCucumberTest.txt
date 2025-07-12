@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: com.anagha.petclinic.testrunner.RunCucumberTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.07 s - in com.anagha.petclinic.testrunner.RunCucumberTest
+Tests run: 17, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 115.809 s <<< FAILURE! - in com.anagha.petclinic.testrunner.RunCucumberTest
+Search existing owner by last name and verify their profile  Time elapsed: 0.833 s  <<< ERROR!
+io.cucumber.junit.UndefinedStepException: 
+The step 'user provides valid last name and clicks Find Owner button' is undefined.
+You can implement this step using the snippet(s) below:
+
+@When("user provides valid last name and clicks Find Owner button")
+public void user_provides_valid_last_name_and_clicks_find_owner_button() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+

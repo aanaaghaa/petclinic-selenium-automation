@@ -75,8 +75,10 @@ public class AddOwnersPage extends BasePage{
 	    String telephone = data.get("telephone");
 
 	    addOwnerDetails(firstname, lastname, address, city, telephone);
-	    waitForElementDisappear(By.id("success-message"));
+	    
+	    waitForElement(By.id("success-message"));
 	    String successMsg = driver.findElement(By.id("success-message")).getText();
+	    waitForElementDisappear(By.id("success-message"));
 	    logger.info("Success message displayed: {}", successMsg);
 	    Assert.assertTrue(successMsg.contains("New Owner Created"));
 

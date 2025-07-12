@@ -18,6 +18,7 @@ import io.cucumber.junit.CucumberOptions;
 		features="src/test/resources/features",
 		glue="com.anagha.petclinic.stepdefinitions",
 		plugin= {"pretty", "json:target/cucumber.json",
+				"html:target/cucumber-reports/cucumber.html",
 				"summary"},
 				
 		monochrome=true
