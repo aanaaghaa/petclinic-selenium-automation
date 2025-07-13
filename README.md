@@ -2,6 +2,25 @@ PetClinic Automation Test Framework
 
 This project demonstrates a robust full-stack test automation framework developed for the Spring PetClinic web application. Built with a modular, scalable, and industry-grade architecture, it integrates Selenium WebDriver, Cucumber BDD, JUnit, Excel-driven test data, and Database validation to ensure end-to-end quality assurance.
 
+In Progress:
+Jenkins CI Pipeline
+REST API Automation using Rest Assured
+TestNG Parallel Execution support
+Cloud BrowserGrid support (e.g., BrowserStack, Selenium Grid)
+
+| Tool/Library              | Purpose                                             |
+| ------------------------- | --------------------------------------------------- |
+| **Java 17**               | Core programming language for automation            |
+| **Maven**                 | Build automation & dependency management            |
+| **RestAssured**           | REST API testing framework                          |
+| **TestNG**                | Test execution, data-driven testing, and assertions |
+| **ExtentReports**         | Rich and customizable HTML reporting                |
+| **Jackson**               | JSON serialization/deserialization                  |
+| **RetryAnalyzer**         | Automatically re-run flaky tests                    |
+| **JavaMail API**          | Send automated email reports after test execution   |
+| **Log4j**                 | Logging framework for debugging and traceability    |
+| **JSON Schema Validator** | Contract testing and schema validation              |
+
 Project Structure
 
 src/
@@ -19,16 +38,6 @@ src/
 ├── features/  All feature files (BDD scenarios)
 └── config.properties  Central config (URL, browser)
 └──testdata/ All testdata from Excel
-
- Tech Stack
-| Tool        | Purpose                      |
-|-------------|------------------------------|
-| Java        | Main programming language    |
-| Selenium    | UI automation framework      |
-| Cucumber    | BDD with Gherkin             |
-| JUnit       | Test runner                  |
-| Maven       | Dependency management        |
-| SLF4J       | Logging                      |
 1. Home Page
 •	Title and menu validation
 •	Logo visibility
