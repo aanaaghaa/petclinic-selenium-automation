@@ -80,7 +80,7 @@ http://localhost:8090
 
 How to Run
  1. Clone the Repo
-```bash
+
 git clone url=http://localhost:8080
 2. Update Config
 Update config.properties: properties
