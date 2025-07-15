@@ -131,7 +131,7 @@ public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 	@When("the user does not provide {string} and valid {string} and {string}")
 	public void the_user_does_not_provide_and_valid_and(String petName, String dob, String petType)
 	{
-		System.out.println(petName + " " + dob + " "+ petType);
+		//System.out.println(petName + " " + dob + " "+ petType);
 		logger.info("Submitting Pet form without pet name.");
 		addPetPage.addPetDetails(petName, dob, petType);
 		addPetPage.clickAddPetButton();
@@ -141,6 +141,7 @@ public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 	@Then("the user should get a field validation error")
 	public void the_user_should_get_a_field_validation_error()
 	{
+		basePage.waitForElement(By.className("help-inline"));
 		String validationError=driver.findElement(By.className("help-inline")).getText();
 		logger.info("Validation error displayed: {}", validationError);
 		Assert.assertTrue(validationError.contains("is required"));

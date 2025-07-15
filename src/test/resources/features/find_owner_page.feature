@@ -7,8 +7,12 @@ including positive, negative, and edge scenarios such as case-insensitive search
 
 Scenario Outline: Search existing owner by last name and verify their profile
 Given the user is on Find Owners page
-When user provides valid last name and clicks Find Owner button
+When the user enters non existent user name with "<LastName>" and clicks on Find Owner button
 Then the user details should be displayed on the Owner Information page
+
+Examples:
+	| LastName |
+	| S			 |
 
 
  # ------------------------ NEGATIVE SCENARIO ------------------------

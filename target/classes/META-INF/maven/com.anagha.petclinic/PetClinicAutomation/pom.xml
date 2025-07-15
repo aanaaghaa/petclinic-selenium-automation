@@ -108,7 +108,7 @@
       </configuration>
     </plugin>
 
-    <!-- Cucumber Reporting Plugin -->
+    <!-- Cucumber Reporting Plugin 
     <plugin>
       <groupId>net.masterthought</groupId>
       <artifactId>maven-cucumber-reporting</artifactId>
@@ -130,7 +130,7 @@
           </configuration>
         </execution>
       </executions>
-    </plugin>
+    </plugin>-->
 
   </plugins>
 </build>

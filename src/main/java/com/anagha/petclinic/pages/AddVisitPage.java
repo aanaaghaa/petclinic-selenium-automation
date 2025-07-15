@@ -61,6 +61,7 @@ public class AddVisitPage extends BasePage{
 	
 	// Returns the most recently extracted pet ID
 	public void clickAddVisitLinkForPet(String petName) throws InterruptedException {
+		waitForElement(By.className("table-condensed"));
 	    String xpath = "//tr//dd[contains(text(),'" + petName + "')]//ancestor::tr//td//a[contains(text(),'Add Visit')]";
 	    WebElement addVisitLink = driver.findElement(By.xpath(xpath));
 	    String href = addVisitLink.getAttribute("href");
