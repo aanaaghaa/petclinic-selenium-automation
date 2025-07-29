@@ -89,8 +89,7 @@ public class AddVisitSteps {
 	@Then("user should get a success message")
 	public void user_should_get_a_success_message()
 	{
-		By successMessageLocator = By.id("success-message");
-		basePage.waitForElement(successMessageLocator); // Add this before fetching the text
+		basePage.waitForElement(By.id("success-message")); 
 		String successvisitbookedMsg=driver.findElement(By.id("success-message")).getText();
 		logger.info("Success message displayed: {}", successvisitbookedMsg);
 		Assert.assertTrue(successvisitbookedMsg.contains("visit has been booked"));

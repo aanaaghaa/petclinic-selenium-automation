@@ -30,7 +30,7 @@ Then the user will get a field validation error
 
 Examples:
 	|ownerId | 
-	| 9 		 |
+	| 1 		 |
 
 # ------------------------ EDGE SCENARIO ------------------------
 
@@ -42,6 +42,6 @@ Then the user should be directed to error page
 
 Examples:
 	|ownerId | 
-	| 9   	 | 
+	| 1	  	 | 
 
   

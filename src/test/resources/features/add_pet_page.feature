@@ -14,7 +14,7 @@ Scenario: Add a new pet to an existing owner
     
  Examples:
  | ownerId |
- | 9			 |
+ | 1			 |
 
 # ------------------------ NEGATIVE SCENARIO ------------------------  
 Scenario Outline: Add a pet without pet name
@@ -25,7 +25,7 @@ Then the user should get a field validation error
 
 Examples:
 | ownerId | petName | dob 			 | petType |
-| 9				| 				| 01-10-2024 | dog		 |
+| 1				| 				| 01-10-2024 | dog		 |
 
  # ------------------------ EDGE SCENARIO ------------------------
 
@@ -37,4 +37,4 @@ Then the user should get a validation error
 
 Examples:
 | ownerId | petName | dob 			 | petType |
-| 9				| dooog		| 11-01-2026 | dog		 |
+| 1				| dooog		| 11-01-2026 | dog		 |
