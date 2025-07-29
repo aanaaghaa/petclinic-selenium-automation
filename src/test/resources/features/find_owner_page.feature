@@ -12,7 +12,7 @@ Then the user details should be displayed on the Owner Information page
 
 Examples:
 	| LastName |
-	| S			 |
+	| S			 	 |
 
 
  # ------------------------ NEGATIVE SCENARIO ------------------------
