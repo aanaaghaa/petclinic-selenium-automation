@@ -197,7 +197,7 @@ public class AddVisitSteps {
 		basePage.waitForElement(By.className("help-inline"));
 		String descValError=driver.findElement(By.className("help-inline")).getText();
 		logger.info("Validation error displayed: {}", descValError);
-		Assert.assertTrue(descValError.contains("not be blank"));
+		Assert.assertTrue(descValError.contains("must not be blank"));
 	}
 	
 	// ------------------------ EDGE TEST CASES ------------------------
@@ -216,7 +216,8 @@ public class AddVisitSteps {
 	{
 		By errorMsg=By.xpath("//div[contains(@class, 'xd-container')]");
 				basePage.waitForElement(errorMsg);
-		String error=driver.findElement(errorMsg).getText();
+				
+		String error=driver.findElement(By.xpath("//div[contains(@class, 'xd-container')]/h2")).getText();
 		logger.info("Error page displayed: {}", error);
 		Assert.assertTrue(error.contains(GENERIC_ERROR));
 	}
