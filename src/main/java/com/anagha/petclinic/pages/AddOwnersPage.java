@@ -97,6 +97,7 @@ public class AddOwnersPage extends BasePage{
 		    cityField.sendKeys(city != null ? city : "");
 		    telephoneField.sendKeys(telephone != null ? telephone : "");
 		    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton);
+		    Thread.sleep(20);
 		    waitForElementToBeClickable(By.xpath("//button[@type='submit']"));
 		    submitButton.click(); 
 	}
