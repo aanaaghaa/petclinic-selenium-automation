@@ -39,13 +39,8 @@ public class FindOwnersPage extends BasePage{
 	public boolean isOwnerNamePresent(String name) {
 		boolean nameFetched = false;
 	    List<WebElement> data = driver.findElements(By.xpath("//th//ancestor::thead/following-sibling::tbody//a"));
-	    for(WebElement names: data)
-	    {
-	    	nameFetched=names.getText().contains(name);
-	    }
-	    return nameFetched;
 	    
-	    // return data.stream().anyMatch(el -> el.getText().contains(name));
+	    return data.stream().anyMatch(el -> el.getText().contains(name));
 	    
 	}
 	
