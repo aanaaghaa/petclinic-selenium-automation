@@ -16,9 +16,9 @@ And the visit details should be added to the database for owner "<ownerId>" and 
 
 Examples:
     | ownerId | petName			| date        | description     |
-    | 3	      |	Ginger			| TODAY				| Grooming Visit  |
+    | 3	      |	Jewel				| TODAY				| Grooming Visit  |
     | 1 	    |	Leo					| TODAY			  |  Health Checkup	|
-    | 5	      |	Bella				| TODAY				|  Vaccination		|
+    | 5	      |	George			| TODAY				|  Vaccination		|
 
 # ------------------------ NEGATIVE SCENARIO ------------------------
 
