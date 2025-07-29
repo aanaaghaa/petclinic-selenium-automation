@@ -37,7 +37,7 @@ public class FindOwnersPage extends BasePage{
 	
 	//Verify if the owner information is matching with the data provided by the user by checking its name field 
 	public boolean isOwnerNamePresent(String name) {
-	    List<WebElement> data = driver.findElements(By.xpath("//th/following-sibling::td"));
+	    List<WebElement> data = driver.findElements(By.xpath("//th//ancestor::thead/following-sibling::tbody//a"));
 	    return data.stream().anyMatch(el -> el.getText().contains(name));
 	}
 	
