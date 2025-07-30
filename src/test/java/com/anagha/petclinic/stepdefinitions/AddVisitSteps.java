@@ -2,6 +2,8 @@ package com.anagha.petclinic.stepdefinitions;
 
 import java.sql.SQLException;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.Assert;
@@ -34,7 +36,10 @@ public class AddVisitSteps {
 	WebDriver driver;
 	AddVisitPage addVisitPage;
 	BasePage basePage;
-	String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	//String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	String today = LocalDate.now().minusDays(1)
+		    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
 	private String savedDescription;
 	public static final String GENERIC_ERROR = "Something happened";
 	
