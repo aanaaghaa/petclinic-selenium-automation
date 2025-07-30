@@ -165,7 +165,6 @@ public class AddVisitSteps {
 
 			    logger.info("Visit details inserted into DB for owner {}, pet {}, date {}, desc '{}'",
 			                ownerId, petId, dbFormattedDate, expectedDescription);
-			
 			    boolean isPresent = DBUtils.isVisitPresentInDB(ownerId, petId, dbFormattedDate, expectedDescription);
 			    Assert.assertTrue("Visit not found in DB for ownerId: " + ownerId + ", petId: " + petId, isPresent);
 			    logger.info("Visit exists in DB for owner {}, pet {}, date {}, description '{}'", ownerId, petId, dbFormattedDate, expectedDescription);
@@ -195,6 +194,7 @@ public class AddVisitSteps {
 		basePage.waitForElement(By.className("help-inline"));
 		String descValError=driver.findElement(By.className("help-inline")).getText();
 		logger.info("Validation error displayed: {}", descValError);
+		System.out.println("ACTUAL VALIDATION MESSAGE: " + descValError);
 		Assert.assertTrue(descValError.contains("blank"));
 	}
 	
@@ -213,10 +213,10 @@ public class AddVisitSteps {
 	public void the_user_should_be_directed_to_error_page()
 	{
 		By errorMsg=By.xpath("//div[contains(@class, 'xd-container')]");
-				basePage.waitForElement(errorMsg);
-				
+		basePage.waitForElement(errorMsg);
 		String error=driver.findElement(By.xpath("//div[contains(@class, 'xd-container')]/h2")).getText();
 		logger.info("Error page displayed: {}", error);
+		System.out.println("ACTUAL VALIDATION MESSAGE: " + error);
 		Assert.assertTrue(error.contains(GENERIC_ERROR));
 	}
 }
