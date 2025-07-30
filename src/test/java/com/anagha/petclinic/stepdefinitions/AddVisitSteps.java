@@ -45,13 +45,12 @@ public class AddVisitSteps {
 	public void the_user_is_on_the_owners_page_owner_with(String ownerId)
 	{
 		driver=DriverFactory.getDriver();
-		 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		driver.get(ConfigReader.get("url")+"/owners/" + ownerId);
 		String currUrl=driver.getCurrentUrl();
 		logger.info("Navigated to Owner page. Current URL: {}", currUrl);
 		Assert.assertTrue(currUrl.contains("owners"));
-		basePage=new BasePage(driver);
-		addVisitPage=new AddVisitPage(driver);
+		//basePage=new BasePage(driver);
+		//addVisitPage=new AddVisitPage(driver);
 	}
 	
 	// Clicks the 'Add Visit' link for the specified pet

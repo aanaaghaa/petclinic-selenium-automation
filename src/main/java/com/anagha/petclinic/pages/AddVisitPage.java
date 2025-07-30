@@ -42,6 +42,7 @@ public class AddVisitPage extends BasePage{
 	{
 		driver.findElement(By.id("date")).sendKeys(date);
 		driver.findElement(By.id("description")).sendKeys(desc);
+		waitForElementToBeClickable(By.xpath("//button[text()='Add Visit']"));
 		driver.findElement(By.xpath("//button[text()='Add Visit']")).click();
 	}
 	

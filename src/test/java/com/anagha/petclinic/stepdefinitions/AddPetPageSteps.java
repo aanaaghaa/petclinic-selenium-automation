@@ -1,7 +1,6 @@
 package com.anagha.petclinic.stepdefinitions;
 
 import java.sql.SQLException;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +44,6 @@ public class AddPetPageSteps {
 public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 {
 		driver=DriverFactory.getDriver();
-		 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		addPetPage=new AddPetPage(driver);
 		basePage=new BasePage(driver);
 		driver.get(ConfigReader.get("url")+"/owners/" + ownerId + "/pets/new");
