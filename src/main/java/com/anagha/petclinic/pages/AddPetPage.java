@@ -51,15 +51,15 @@ public class AddPetPage extends BasePage {
     // Reusable method to fill pet details in the Add Pet form
     public void addPetDetails(String petname, String dob, String pettype) {
         waitForElement(By.id("name"));
-        //petNameField.clear();
         petNameField.sendKeys(petname);
-        //birthDateField.clear();
-        //birthDateField.sendKeys(dob);
-        waitForElement(By.id("birthDate"));
+       // waitForElement(By.id("birthDate"));
         ((JavascriptExecutor) driver).executeScript(
         	    "arguments[0].value = arguments[1]",
         	    birthDateField, dob
         	);
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(
+                "arguments[0].dispatchEvent(new Event('change'));", birthDateField
+            );
         Select petType = new Select(petTypeDropdown);
         petType.selectByVisibleText(pettype);
     }
