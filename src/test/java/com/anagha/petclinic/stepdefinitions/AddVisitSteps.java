@@ -49,8 +49,8 @@ public class AddVisitSteps {
 		String currUrl=driver.getCurrentUrl();
 		logger.info("Navigated to Owner page. Current URL: {}", currUrl);
 		Assert.assertTrue(currUrl.contains("owners"));
-		//basePage=new BasePage(driver);
-		//addVisitPage=new AddVisitPage(driver);
+		basePage=new BasePage(driver);
+		addVisitPage=new AddVisitPage(driver);
 	}
 	
 	// Clicks the 'Add Visit' link for the specified pet
