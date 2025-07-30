@@ -77,6 +77,8 @@ public class AddPetPage extends BasePage {
             petData.get("dob"),
             petData.get("pettype")
         );
+        System.out.println("DOB from Excel: " + petData.get("dob"));
+        System.out.println("Type: " + (petData.get("dob") == null ? "null" : "length=" + petData.get("dob").length()));
         clickAddPetButton();
         successMsgOfNewPetAdded();    
     }
