@@ -211,7 +211,8 @@ public class AddVisitSteps {
 	public void the_user_provides_a_valid_date()
 	{
 		logger.info("Entering valid date and 500-character long description");
-		addVisitPage.addVisitDetails(today, "This is a sample 500-character description for testing the input field limits accurately. It is useful for validating how well the application handles edge cases, ensures proper user experience, avoids truncation or system crashes, and supports special characters and multilingual text. Such tests are essential for robust systems that require data precision, especially in forms where user-provided content might vary in length significantly, from a few to hundreds of characters.");
+		addVisitPage.addVisitDetails(today, "This is a sample 500-character description for testing the input field limits accurately. It is useful for validating how well the application handles edge cases, ensures proper user experience, avoids truncation or system crashes, and supports special characters and multilingual text. Such tests are essential for robust systems that require data precision, especially in forms where user-provided content might vary in length significantly, from a few to hundreds of characters."
+				+ "This is a sample 500-character description for testing the input field limits accurately. It is useful for validating how well the application handles edge cases, ensures proper user experience, avoids truncation or system crashes, and supports special characters and multilingual text. Such tests are essential for robust systems that require data precision, especially in forms where user-provided content might vary in length significantly, from a few to hundreds of characters.");
 	}
 	
 	// Verifies redirection to error page for invalid (long) description
