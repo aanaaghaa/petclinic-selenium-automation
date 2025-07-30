@@ -138,7 +138,7 @@ public class AddVisitSteps {
 	            dateText = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 	            String descText = columns.get(1).getText().trim(); // Assuming second column is description
 	            //System.out.println("Description expected: " + expectedDescription);
-	           // System.out.println("Daate expected: " + today);
+	           // System.out.println("Date expected: " + today);
 	            System.out.println("Actaul desc: " +descText);
 	            System.out.println("Actual date: " +dateText);
 	            logger.info("Visit found - Date: {}, Description: {}", dateText, descText);
