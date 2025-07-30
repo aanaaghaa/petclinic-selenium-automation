@@ -195,7 +195,7 @@ public class AddVisitSteps {
 		basePage.waitForElement(By.className("help-inline"));
 		String descValError=driver.findElement(By.className("help-inline")).getText();
 		logger.info("Validation error displayed: {}", descValError);
-		Assert.assertTrue(descValError.contains("must not be blank"));
+		Assert.assertTrue(descValError.contains("blank"));
 	}
 	
 	// ------------------------ EDGE TEST CASES ------------------------

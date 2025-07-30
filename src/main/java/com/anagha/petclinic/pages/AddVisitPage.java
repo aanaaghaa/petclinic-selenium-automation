@@ -40,7 +40,9 @@ public class AddVisitPage extends BasePage{
 	// Fills the visit form with date and description, and submits it
 	public void addVisitDetails(String date, String desc)
 	{
+		waitForElement(By.id("date"));
 		driver.findElement(By.id("date")).sendKeys(date);
+		waitForElement(By.id("description"));
 		driver.findElement(By.id("description")).sendKeys(desc);
 		waitForElementToBeClickable(By.xpath("//button[text()='Add Visit']"));
 		driver.findElement(By.xpath("//button[text()='Add Visit']")).click();
