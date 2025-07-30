@@ -52,14 +52,16 @@ public class AddPetPage extends BasePage {
     public void addPetDetails(String petname, String dob, String pettype) {
         waitForElement(By.id("name"));
         petNameField.sendKeys(petname);
+        System.out.println(petNameField.getText());
        waitForElement(By.id("birthDate"));
         birthDateField.sendKeys(dob);
+        WebElement dateField=driver.findElement(By.id("birthDate"));
         ((JavascriptExecutor) driver).executeScript(
         	    "arguments[0].value = arguments[1]",
-        	    birthDateField, dob
+        	    dateField, dob
         	);
         ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(
-                "arguments[0].dispatchEvent(new Event('change'));", birthDateField
+                "arguments[0].dispatchEvent(new Event('change'));", dateField
             );
         System.out.println("DEBUG - Date field value: " + birthDateField.getAttribute("value"));
         Select petType = new Select(petTypeDropdown);
