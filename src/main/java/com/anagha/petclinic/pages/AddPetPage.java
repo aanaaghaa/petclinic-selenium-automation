@@ -89,8 +89,10 @@ public class AddPetPage extends BasePage {
     // Verifies the success message after pet is added
     public void successMsgOfNewPetAdded()
     {
+    	
     	waitForElement(By.id("success-message"));
     		String popUpMsg=driver.findElement(By.id("success-message")).getText();
+    		System.out.println("Actual Message: " +popUpMsg);
     		waitForElementDisappear(By.id("success-message"));
     		logger.info("Success message displayed: {}", popUpMsg);
     		Assert.assertTrue("Expected success message not found!", popUpMsg.contains("New Pet has been Added"));
