@@ -52,7 +52,7 @@ public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 	
 	// Reads pet data from Excel and adds each pet for its corresponding owner
 	@When("the user provides valid pet details from Excel and confirm success")
-	public void the_user_provides_valid_pet_details_from_Excel_and_confirm_success() throws SQLException
+	public void the_user_provides_valid_pet_details_from_Excel_and_confirm_success() throws SQLException, InterruptedException
 	{
 		
 		String filePath = ConfigReader.get("testdata_path_pet");
