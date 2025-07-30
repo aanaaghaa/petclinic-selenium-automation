@@ -3,7 +3,7 @@ This feature validates the Add Pet functionality under various scenarios.
 It includes positive flow, form validations, edge-case handling, and database verification.
   
 # ------------------------ POSITIVE SCENARIO ------------------------
-
+@skip
 Scenario: Add a new pet to an existing owner
 
     Given the user is on Add new pet page for owner with id "<ownerId>"

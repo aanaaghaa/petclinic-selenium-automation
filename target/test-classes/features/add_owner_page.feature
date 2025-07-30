@@ -1,4 +1,4 @@
-@skip
+
 Feature: PetClinic Add Owner
   This feature tests the functionality of adding a new Owner in the PetClinic application.
   Scenarios include positive, negative, and edge cases to validate form behavior, DB integration, and UI validations.
