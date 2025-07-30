@@ -58,9 +58,7 @@ public class AddVisitSteps {
 	{
 		
 		 logger.info("Looking for Add Visit link for pet: {}", petName);
-
-		 addVisitPage.clickAddVisitLinkForPet(petName);
-		 
+		 addVisitPage.clickAddVisitLinkForPet(petName); 
 		    logger.info("Clicked on Add Visit link for pet: {}", petName);
 	}
 	

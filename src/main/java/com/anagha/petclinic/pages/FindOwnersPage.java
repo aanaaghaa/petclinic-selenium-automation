@@ -37,16 +37,16 @@ public class FindOwnersPage extends BasePage{
 	
 	//Verify if the owner information is matching with the data provided by the user by checking its name field 
 	public boolean isOwnerNamePresent(String name) {
-		boolean nameFetched = false;
 	    List<WebElement> data = driver.findElements(By.xpath("//th//ancestor::thead/following-sibling::tbody//a"));
 	    
 	    return data.stream().anyMatch(el -> el.getText().contains(name));
 	    
 	}
 	
-	//Veirfy if there is a field validation for negative scenario
+	//Verify if there is a field validation for negative scenario
 	public String getFieldError()
 	{
+		waitForElement(By.xpath("//span[@class='help-inline']//p"));
 		return driver.findElement(By.xpath("//span[@class='help-inline']//p")).getText();
 	}
 
