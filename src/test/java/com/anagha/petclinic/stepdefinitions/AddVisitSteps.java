@@ -184,6 +184,7 @@ public class AddVisitSteps {
 	public void the_user_provides_the_valid_date_and_empty_description()
 	{
 		logger.info("Entering valid visit date and empty description");
+		System.out.println("Date: " +today);
 		addVisitPage.addVisitDetails(today, " ");
 	}
 	
