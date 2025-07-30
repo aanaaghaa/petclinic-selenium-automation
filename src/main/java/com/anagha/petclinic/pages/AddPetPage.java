@@ -39,9 +39,6 @@ public class AddPetPage extends BasePage {
     @FindBy(id = "name")
     private WebElement petNameField;
 
-    @FindBy(id = "birthDate")
-    private WebElement birthDateField;
-
     @FindBy(id = "type")
     private WebElement petTypeDropdown;
 
@@ -53,9 +50,8 @@ public class AddPetPage extends BasePage {
         waitForElement(By.id("name"));
         petNameField.sendKeys(petname);
         System.out.println(petNameField.getText());
-       waitForElement(By.id("birthDate"));
-        birthDateField.sendKeys(dob);
         WebElement dateField=driver.findElement(By.id("birthDate"));
+       waitForElement(By.id("birthDate"));
         ((JavascriptExecutor) driver).executeScript(
         	    "arguments[0].value = arguments[1]",
         	    dateField, dob
@@ -63,7 +59,7 @@ public class AddPetPage extends BasePage {
         ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(
                 "arguments[0].dispatchEvent(new Event('change'));", dateField
             );
-        System.out.println("DEBUG - Date field value: " + birthDateField.getAttribute("value"));
+        System.out.println("DEBUG - Date field value: " + dateField.getText());
         Select petType = new Select(petTypeDropdown);
         petType.selectByVisibleText(pettype);
     }
