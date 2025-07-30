@@ -55,6 +55,7 @@ public class AddPetPage extends BasePage {
         petNameField.sendKeys(petname);
         //birthDateField.clear();
         //birthDateField.sendKeys(dob);
+        waitForElement(By.id("dob"));
         ((JavascriptExecutor) driver).executeScript(
         	    "arguments[0].value = arguments[1]",
         	    birthDateField, dob
