@@ -112,6 +112,7 @@ public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 	public void the_Add_Visit_button_should_be_enabled_for_the_pet()
 	{
 		WebElement addVisitBtn=driver.findElement(By.xpath("//a[text()='Add Visit']"));
+		basePage.waitForElement(By.xpath("//a[text()='Add Visit']"));
 		logger.info("Checking if Add Visit button is enabled.");
 		if(!addVisitBtn.isEnabled())
 		{
@@ -165,6 +166,7 @@ public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 	{
 		basePage.waitForElement(By.className("help-inline"));
 		String validationError=driver.findElement(By.className("help-inline")).getText();
+		System.out.println("Error Message in Actual: " + validationError);
 		logger.info("Validation error received for future DOB: {}", validationError);
 		Assert.assertTrue(validationError.contains("invalid date"));
 	}
