@@ -38,7 +38,7 @@ public class AddVisitSteps {
 	BasePage basePage;
 	//String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	String today = LocalDate.now().minusDays(1)
-		    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		    .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
 	private String savedDescription;
 	public static final String GENERIC_ERROR = "Something happened";
