@@ -34,7 +34,7 @@ public class AddVisitSteps {
 	WebDriver driver;
 	AddVisitPage addVisitPage;
 	BasePage basePage;
-	String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	private String savedDescription;
 	public static final String GENERIC_ERROR = "Something happened";
 	
@@ -217,7 +217,7 @@ public class AddVisitSteps {
 		basePage.waitForElement(errorMsg);
 		String error=driver.findElement(By.xpath("//div[contains(@class, 'xd-container')]/h2")).getText();
 		logger.info("Error page displayed: {}", error);
-		System.out.println("ACTUAL VALIDATION MESSAGE: " + error);
+		System.out.println("ACTUAL ERROR MESSAGE: " + error);
 		Assert.assertTrue(error.contains(GENERIC_ERROR));
 	}
 }

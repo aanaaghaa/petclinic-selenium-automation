@@ -1,5 +1,9 @@
 package com.anagha.petclinic.stepdefinitions;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
@@ -28,6 +32,14 @@ public class Hooks {
 	        final byte[] screenshot = ((TakesScreenshot) DriverFactory.getDriver())
 	                .getScreenshotAs(OutputType.BYTES);
 	        scenario.attach(screenshot, "image/png", "Failure Screenshot");
+	     // Saves file locally for Jenkins
+	        try {
+	            File srcFile = ((TakesScreenshot) DriverFactory.getDriver())
+	                    .getScreenshotAs(OutputType.FILE);
+	            FileUtils.copyFile(srcFile, new File("target/screenshots/" + scenario.getName() + ".png"));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 	    }
 	    DriverFactory.getDriver();
 	    DriverFactory.quitDriver(); 
