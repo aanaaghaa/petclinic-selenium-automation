@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,7 +54,11 @@ public class AddPetPage extends BasePage {
         //petNameField.clear();
         petNameField.sendKeys(petname);
         //birthDateField.clear();
-        birthDateField.sendKeys(dob);
+        //birthDateField.sendKeys(dob);
+        ((JavascriptExecutor) driver).executeScript(
+        	    "arguments[0].value = arguments[1]",
+        	    birthDateField, dob
+        	);
         Select petType = new Select(petTypeDropdown);
         petType.selectByVisibleText(pettype);
     }
