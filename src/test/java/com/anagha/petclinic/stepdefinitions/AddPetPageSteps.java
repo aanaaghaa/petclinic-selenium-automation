@@ -130,7 +130,7 @@ public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 	
 	// Tries submitting the Add Pet form without a pet name
 	@When("the user does not provide {string} and valid {string} and {string}")
-	public void the_user_does_not_provide_and_valid_and(String petName, String dob, String petType)
+	public void the_user_does_not_provide_and_valid_and(String petName, String dob, String petType) throws InterruptedException
 	{
 		//System.out.println(petName + " " + dob + " "+ petType);
 		logger.info("Submitting Pet form without pet name.");
@@ -152,7 +152,7 @@ public void the_user_is_on_Add_new_pet_page_for_owner_with_id(String ownerId)
 
 	// Submits the Add Pet form with a future date of birth
 	@When("the user provides all valid {string} and future {string} and valid {string}")
-	public void the_user_provides_all_valid_and_future_and_valid(String petName, String dob, String petType)
+	public void the_user_provides_all_valid_and_future_and_valid(String petName, String dob, String petType) throws InterruptedException
 	{
 		logger.info("Entering valid pet name and type with DOB in future");
 		System.out.println(petName + " " + dob + " "+ petType);

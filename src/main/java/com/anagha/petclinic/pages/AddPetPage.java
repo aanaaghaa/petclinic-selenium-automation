@@ -46,12 +46,13 @@ public class AddPetPage extends BasePage {
     private WebElement addPetButton;
 
     // Reusable method to fill pet details in the Add Pet form
-    public void addPetDetails(String petname, String dob, String pettype) {
+    public void addPetDetails(String petname, String dob, String pettype) throws InterruptedException {
         waitForElement(By.id("name"));
         petNameField.sendKeys(petname);
         System.out.println(petNameField.getText());
         WebElement dateField=driver.findElement(By.id("birthDate"));
        waitForElement(By.id("birthDate"));
+       Thread.sleep(300);
         ((JavascriptExecutor) driver).executeScript(
         	    "arguments[0].value = arguments[1]",
         	    dateField, dob
@@ -71,7 +72,7 @@ public class AddPetPage extends BasePage {
     }
 
     // Reads pet data from Excel and submits it via the UI
-    public void addPetFromExcel(Map<String, String> petData) throws SQLException {
+    public void addPetFromExcel(Map<String, String> petData) throws SQLException, InterruptedException {
     	 waitForElement(By.id("name"));
         addPetDetails(
             petData.get("petname"),
