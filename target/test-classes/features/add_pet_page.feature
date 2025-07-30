@@ -37,4 +37,4 @@ Then the user should get a validation error
 
 Examples:
 | ownerId | petName | dob 			 | petType |
-| 1				| dooog		| 11-01-2025 | dog		 |
+| 1				| dooog		| 2026-01-11 | dog		 |
