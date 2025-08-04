@@ -1,6 +1,6 @@
 PetClinic Automation Test Framework
 
-This project automates UI testing for the [Spring PetClinic](https://spring-petclinic.github.io/) web application using Selenium WebDriver, Cucumber BDD, JUnit, and Java.
+This project automates Full stack testing for the [Spring PetClinic](https://spring-petclinic.github.io/) web application using Selenium WebDriver, Cucumber BDD, JUnit, and Java.
 
 Project Structure
 
@@ -29,6 +29,10 @@ src/
 | JUnit       | Test runner                  |
 | Maven       | Dependency management        |
 | SLF4J       | Logging                      |
+| MySQL	      | Database		     | 
+| API 	      | Rest Assured		     |
+| Apache POI  | Test data fetch from Excel   | 
+
 1. Home Page
 •	Title and menu validation
 •	Logo visibility
@@ -52,7 +56,7 @@ src/
 
 Jenkins Integration
 
-This project is configured with Jenkins CI/CD to automate test runs and generate reports.
+This project is configured with Jenkins CI/CD to automate test runs and project cucumber reports.
 
 Jenkins Job Includes:
  Git pull on build

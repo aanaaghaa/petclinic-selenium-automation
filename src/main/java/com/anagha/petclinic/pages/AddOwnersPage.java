@@ -1,7 +1,7 @@
 package com.anagha.petclinic.pages;
 
 import java.sql.SQLException;
-
+import java.util.HashMap;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -10,7 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 import com.anagha.petclinic.base.BasePage;
 import com.anagha.petclinic.utils.ConfigReader;
@@ -84,6 +85,22 @@ public class AddOwnersPage extends BasePage{
 
 	    DBUtils.insertOwnerToDB(firstname, lastname, address, city, telephone);
 	    logger.info("Inserted into your DB as well.");
+	    
+	    Map<String, Object> requestBody = new HashMap<>();
+	    requestBody.put("firstName", firstname);
+	    requestBody.put("lastName", lastname);
+	    requestBody.put("address", address);
+	    requestBody.put("city", city);
+	    requestBody.put("telephone", telephone);
+
+	    Response postResponse = RestAssured.given()
+	        .contentType("application/json")
+	        .body(requestBody)
+	        .when()
+	        .post(ConfigReader.get("api_url")+ "/api/owners");
+
+	    postResponse.then().statusCode(201);
+	    logger.info("Also added the owner via API for cross-validation.");
 
 	    return firstname + " " + lastname;
 	}

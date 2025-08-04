@@ -1,3 +1,4 @@
+
 Feature: Adding a visit to pet and check if its reflecting in the history
 This feature validates the Add Pet functionality under various scenarios.
   It includes positive flow, form validations, edge-case handling, and database verification.

@@ -2,6 +2,7 @@ package com.anagha.petclinic.stepdefinitions;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,8 @@ import com.anagha.petclinic.utils.ExcelUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import junit.framework.Assert;
 
 import com.anagha.petclinic.utils.ConfigReader;
@@ -38,6 +41,7 @@ public class AddOwnerPageSteps {
 	AddOwnersPage addOwnersPage;
 	BasePage basePage;
 	List<String> submittedOwners = new ArrayList<>();
+	String baseUrl = ConfigReader.get("api_url");
 	
 	// ------------------------ POSITIVE TEST CASES ------------------------
 	
@@ -71,15 +75,38 @@ public class AddOwnerPageSteps {
  	}
 	
 	// Verify added owners exist in the database
-	@Then("all the owners added through UI should be present in the database")
-	public void all_owners_added_through_UI_should_be_present_in_the_database() throws SQLException {
+	@Then("all the owners added through UI should be present in the database and API")
+	public void all_owners_added_through_UI_should_be_present_in_the_database_and_API() throws SQLException {
 		 List<String> dbOwners = DBUtils.getAllOwnerNames();
 
 		    for (String fullName : submittedOwners) {
 		        Assert.assertTrue("Owner missing in DB: " + fullName, dbOwners.contains(fullName));
 		        logger.info("Owner '{}' exists in DB.", fullName);
 		    }
+		    
+		 // Read Excel again to get all owner details
+		    String filePath = ConfigReader.get("testdata_path_owner");
+		    List<Map<String, String>> ownersData = ExcelUtils.getExcelData(filePath, "Sheet1");
+		    
+		    for (Map<String, String> data : ownersData) {
+		        Map<String, Object> requestBody = new HashMap<>();
+		        requestBody.put("firstName", data.get("firstname"));
+		        requestBody.put("lastName", data.get("lastname"));
+		        requestBody.put("address", data.get("address"));
+		        requestBody.put("city", data.get("city"));
+		        requestBody.put("telephone", data.get("telephone"));
+		        
+		    Response response = RestAssured.given()
+		    	    .contentType("application/json")
+		    	    .body(requestBody)
+		    	    .when()
+		    	    .post(baseUrl + "/api/owners");
+		    
+		    response.then().statusCode(201);
+	        logger.info("Owner '{}' '{}' also added via API.", data.get("firstname"), data.get("lastname"));
+		    }
 	}
+	
 	
 	//Once the owner is successfully added, user will be redirected to Owner Info page and this method checks for the same
 	@Then("the added information should be visible on the Owner Information page")

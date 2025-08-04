@@ -1,3 +1,4 @@
+
 Feature: PetClinic Add Pet
 This feature validates the Add Pet functionality under various scenarios.
 It includes positive flow, form validations, edge-case handling, and database verification.
