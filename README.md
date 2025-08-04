@@ -1,6 +1,6 @@
 PetClinic Automation Test Framework
 
-This project automates Full stack testing for the [Spring PetClinic](https://spring-petclinic.github.io/) web application using Selenium WebDriver, Cucumber BDD, JUnit, and Java.
+This project automates Full stack testing for the [Spring PetClinic](https://spring-petclinic.github.io/) web application using Selenium WebDriver, Cucumber BDD, JUnit, and Java along with API, Jenkins, Excel and MySQL DB inegration
 
 Project Structure
 
@@ -51,7 +51,7 @@ src/
 •	Navigate and validate veterinarian listings across paginated tables
 6. Add Owner Page
 •	Add new owner with positive, negative, and edge data
-•	Read test data from Excel and store valid entries in DB
+•	Read test data from Excel and store valid entries in DB anf API
 •	Validation for empty fields and overly long names (negative/edge)
 
 Jenkins Integration
@@ -75,13 +75,13 @@ http://localhost:8090
 
 How to Run
  1. Clone the Repo
-```bash
 git clone url=http://localhost:8080
 2. Update Config
 Update config.properties: properties
 url=http://localhost:8080
+api_url=http://localhost:9966/petclinic
 browser=chrome
-3. Setup MySQL Database
+4. Setup MySQL Database
 This project interacts with MySQL for validation. Please ensure:
 MySQL is installed and running
 
